@@ -1,0 +1,14 @@
+model User {
+    id String @default(cuid()) @id
+    username String @unique
+    password String
+    role Role @default(WAITER)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum Role{
+    ADMIN
+    KITCHEN
+    WAITER
+}
