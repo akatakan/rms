@@ -1,0 +1,23 @@
+model StockHistory {
+  id String @id @default(cuid())
+
+  quantity_change Int
+  change_type     StockChangeType
+  description     String
+
+  created_at DateTime @default(now())
+
+  // Relations
+  product    Products @relation(fields: [product_id], references: [id])
+  product_id String
+
+  user    Users  @relation(fields: [user_id], references: [id])
+  user_id String
+}
+
+enum StockChangeType {
+  SALE
+  RESTOCK
+  WASTE
+  CORRECTION
+}

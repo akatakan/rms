@@ -1,0 +1,14 @@
+model OrderStatusHistory {
+  id         String      @id @default(cuid())
+  old_status OrderStatus
+  new_status OrderStatus
+
+  createdAt DateTime @default(now())
+
+  // Relations
+  changed_by    Users  @relation(fields: [changed_by_id], references: [id])
+  changed_by_id String
+
+  order    Orders @relation(fields: [order_id], references: [id])
+  order_id String
+}

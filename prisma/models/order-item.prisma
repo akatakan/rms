@@ -1,0 +1,26 @@
+model OrderOnProduct {
+  orderId             String
+  productId           String
+  quantity            Int             @default(1)
+  notes               String?
+  status              OrderItemStatus @default(PENDING)
+  price_at_order      Float
+  cost_price_at_order Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  order   Orders   @relation(fields: [orderId], references: [id])
+  product Products @relation(fields: [productId], references: [id])
+
+  @@id([orderId, productId])
+}
+
+enum OrderItemStatus {
+  PENDING
+  PREPARING
+  READY
+  SERVED
+  CANCELLED
+}

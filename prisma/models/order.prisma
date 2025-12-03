@@ -1,0 +1,34 @@
+model Orders {
+  id              String      @id @default(cuid())
+  status          OrderStatus @default(PENDING)
+  total_amount    Float
+  tax_amount      Float
+  discount_amount Float
+  cancel_reason   String?
+  note            String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // relations
+  cancelled_by    Users?  @relation("cancelled_by", fields: [cancelled_by_id], references: [id])
+  cancelled_by_id String?
+
+  waiter    Users  @relation("waiter", fields: [waiter_id], references: [id])
+  waiter_id String
+
+  table           Tables               @relation(fields: [table_id], references: [id])
+  table_id        String
+  orderOnProducts OrderOnProduct[]
+  payments        Payments[]
+  status_history  OrderStatusHistory[]
+}
+
+enum OrderStatus {
+  PENDING
+  PREPARING
+  READY
+  SERVED
+  COMPLETED
+  CANCELLED
+}

@@ -1,0 +1,16 @@
+model Tables {
+  id           String      @id @default(cuid())
+  table_number String      @unique
+  capacity     Int
+  status       TableStatus @default(AVAILABLE)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  orders       Orders[]
+}
+
+enum TableStatus {
+  AVAILABLE
+  OCCUPIED
+  RESERVED
+  CLOSED
+}

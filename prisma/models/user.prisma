@@ -1,14 +1,27 @@
-model User {
-    id String @default(cuid()) @id
-    username String @unique
-    password String
-    role Role @default(WAITER)
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Users {
+  id            String @id @default(cuid())
+  username      String @unique
+  password_hash String
+  full_name     String
+  phone         String
+  role          Role
+
+  is_active Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  // Relations
+  cancelled_orders Orders[]             @relation("cancelled_by")
+  served_orders    Orders[]             @relation("waiter")
+  payments         Payments[]
+  histories        StockHistory[]
+  status_changes   OrderStatusHistory[]
 }
 
-enum Role{
-    ADMIN
-    KITCHEN
-    WAITER
+enum Role {
+  ADMIN
+  WAITER
+  KITCHEN
+  CASHIER
 }
