@@ -7,37 +7,37 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "password": "admin123"
+  "username": "waiter1",
+  "password": "waiter123"
 }
 
 ###
 GET http://localhost:3000/auth/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhaXRlcjEiLCJzdWIiOiJjbWlyYXJjMjEwMDAxdG9obWJ6M3BlZ2I4Iiwicm9sZSI6IldBSVRFUiIsImlhdCI6MTc2NDg0NDM3NiwiZXhwIjoxNzY0OTMwNzc2fQ.MmuI_M5ecdyCkke-uN0lyMl7IE4ALWZ7JBnn5hrGBa8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoiY21pcm15Mm1uMDAwMmJjaG1jOW96dnZwYiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2NDg2NDkzNSwiZXhwIjoxNzY0OTUxMzM1fQ.6eQyLleP9L3ADN2KqBRsVOnlMyvGnE9u7yU19-VGdjY
 
 
 ###
 
 GET http://localhost:3000/tables
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhaXRlcjEiLCJzdWIiOiJjbWlyYXJjMjEwMDAxdG9obWJ6M3BlZ2I4Iiwicm9sZSI6IldBSVRFUiIsImlhdCI6MTc2NDg0NDM3NiwiZXhwIjoxNzY0OTMwNzc2fQ.MmuI_M5ecdyCkke-uN0lyMl7IE4ALWZ7JBnn5hrGBa8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoiY21pcm15Mm1uMDAwMmJjaG1jOW96dnZwYiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2NDg2NDkzNSwiZXhwIjoxNzY0OTUxMzM1fQ.6eQyLleP9L3ADN2KqBRsVOnlMyvGnE9u7yU19-VGdjY
 
 ###
 
 POST http://localhost:3000/tables/createTable
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoiY21pcjhkOHkxMDAwMG80aG1yOHoxM2l5ayIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2NDg1MDYyMywiZXhwIjoxNzY0OTM3MDIzfQ.CUDMgbRmFJ9SndjlxwX9q4OGtAZVhOhagIfzYM5Bdt0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhaXRlcjEiLCJzdWIiOiJjbWlybXkybWswMDAwYmNobW5mMDMwNzJjIiwicm9sZSI6IldBSVRFUiIsImlhdCI6MTc2NDg2NTAyMSwiZXhwIjoxNzY0OTUxNDIxfQ.zF77AAx3wbG4qR6V860i0W2fBqqYDmCZ0bR7mtvAk34
 
 {
-  "table_number": "15",
+  "table_number": "Masa 15",
   "capacity": 4
 }
 
 
 ###
 
-PATCH http://localhost:3000/tables/updateStatus/cmireiq3h000070hm3yv94qdz
+PATCH http://localhost:3000/tables/updateStatus/cmirn1jze00008shm00dap52b
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoiY21pcjhkOHkxMDAwMG80aG1yOHoxM2l5ayIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2NDg1MDYyMywiZXhwIjoxNzY0OTM3MDIzfQ.CUDMgbRmFJ9SndjlxwX9q4OGtAZVhOhagIfzYM5Bdt0
 

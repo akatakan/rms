@@ -11,7 +11,6 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({adapter})
 
 async function main() {
-    // Create users with different roles
     const users = await Promise.all([
         prisma.users.upsert({
             where: {username: 'admin'},
@@ -21,7 +20,6 @@ async function main() {
                 password_hash: await hash('admin123', 10),
                 role: 'ADMIN',
                 full_name: 'Administrator',
-                phone: '123-456-7890',
             }
         }),
         prisma.users.upsert({

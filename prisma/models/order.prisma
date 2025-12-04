@@ -22,6 +22,10 @@ model Orders {
   orderOnProducts OrderOnProduct[]
   payments        Payments[]
   status_history  OrderStatusHistory[]
+
+  customer             Customer?              @relation(fields: [customerId], references: [id])
+  customerId           String?
+  customerTransactions CustomerTransactions[]
 }
 
 enum OrderStatus {

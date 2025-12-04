@@ -7,5 +7,5 @@ model Categories {
   updatedAt   DateTime @updatedAt
 
   // Relations
-  products    Products[]
+  products Products[]
 }

@@ -8,11 +8,12 @@ import { ConfigModule } from '@nestjs/config';
 import { TablesService } from './tables/tables.service';
 import { TablesController } from './tables/tables.controller';
 import { TablesModule } from './tables/tables.module';
+import { PaymentsModule } from './payments/payments.module';
 
 @Module({
   imports: [UsersModule, AuthModule, DatabaseModule,ConfigModule.forRoot({
     isGlobal: true,
-  }), TablesModule],
+  }), TablesModule, PaymentsModule],
   controllers: [AppController, TablesController],
   providers: [AppService, TablesService],
 })

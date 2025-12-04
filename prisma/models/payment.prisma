@@ -5,9 +5,11 @@ model Payments {
   payment_method   PaymentMethod
   payment_status   PaymentStatus @default(PENDING)
   transaction_date DateTime      @default(now())
+  is_deleted       Boolean       @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  deletedAt DateTime?
 
   // Relations
   order      Orders @relation(fields: [order_id], references: [id])

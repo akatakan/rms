@@ -8,13 +8,13 @@ model Products {
   stock_quantity Int
   is_available   Boolean @default(true)
 
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  deletedAt       DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   // Relations
-  category       Categories?      @relation(fields: [categoryId], references: [id])
-  categoryId     String?
+  category        Categories?      @relation(fields: [categoryId], references: [id])
+  categoryId      String?
   orderOnProducts OrderOnProduct[]
   stock_histories StockHistory[]
 }
