@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { User } from 'src/generated/prisma/client';
-import { UserCreateInput, UserOrderByWithRelationInput, UserUpdateInput, UserWhereInput, UserWhereUniqueInput } from 'src/generated/prisma/models';
+import { Users } from 'src/generated/prisma/client';
+import { UsersCreateInput, UsersOrderByWithRelationInput, UsersUpdateInput, UsersWhereInput, UsersWhereUniqueInput } from 'src/generated/prisma/models';
 
 @Injectable()
 export class UsersService {
@@ -10,12 +10,12 @@ export class UsersService {
     async getUsers(params:{
         skip?: number;
         take?: number;
-        cursor?: UserWhereUniqueInput;
-        where?: UserWhereInput;
-        orderBy?: UserOrderByWithRelationInput;
-    }) : Promise<User[]> {
+        cursor?: UsersWhereUniqueInput;
+        where?: UsersWhereInput;
+        orderBy?: UsersOrderByWithRelationInput;
+    }) : Promise<Users[]> {
         const { skip, take, cursor, where, orderBy } = params;
-        return this.databaseService.user.findMany({
+        return this.databaseService.users.findMany({
             skip,
             take,
             cursor,
@@ -24,30 +24,30 @@ export class UsersService {
         });
     }
 
-    async findByUsername(username: string) : Promise<User | null> {
-        return this.databaseService.user.findUnique({
+    async findByUsername(username: string) : Promise<Users | null> {
+        return this.databaseService.users.findUnique({
             where: { username },
         });
     }
 
-    async createUser(data: UserCreateInput) : Promise<User> {
-        return this.databaseService.user.create({
+    async createUser(data: UsersCreateInput) : Promise<Users> {
+        return this.databaseService.users.create({
             data,
         });
     }
 
     async updateUser(
-        where: UserWhereUniqueInput,
-        data: UserUpdateInput
-    ): Promise<User> {
-        return this.databaseService.user.update({
+        where: UsersWhereUniqueInput,
+        data: UsersUpdateInput
+    ): Promise<Users> {
+        return this.databaseService.users.update({
             where,
             data,
         });
     }
 
-    async deleteUser(where: UserWhereUniqueInput) : Promise<User> {
-        return this.databaseService.user.delete({
+    async deleteUser(where: UsersWhereUniqueInput) : Promise<Users> {
+        return this.databaseService.users.delete({
             where,
         });
     }

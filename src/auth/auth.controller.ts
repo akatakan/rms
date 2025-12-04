@@ -13,10 +13,10 @@ export class AuthController {
         return this.authService.login(req.user);
     }
 
-    @UseGuards(LocalAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('logout')
     async logout(@Request() req) {
-        return req.logout();
+        return { message: 'Logged out successfully' };
     }
 
     @UseGuards(JwtAuthGuard)

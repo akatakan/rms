@@ -14,4 +14,33 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/auth/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoiY21pb21nOTIxMDAwMGE0aG11enhtbXZzeiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2NDc0NDUwMSwiZXhwIjoxNzY0ODMwOTAxfQ.8w56EIiitf2mPT_z2redGpGwIOG_6J9ZNreBWSVwKmc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhaXRlcjEiLCJzdWIiOiJjbWlyYXJjMjEwMDAxdG9obWJ6M3BlZ2I4Iiwicm9sZSI6IldBSVRFUiIsImlhdCI6MTc2NDg0NDM3NiwiZXhwIjoxNzY0OTMwNzc2fQ.MmuI_M5ecdyCkke-uN0lyMl7IE4ALWZ7JBnn5hrGBa8
+
+
+###
+
+GET http://localhost:3000/tables
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IndhaXRlcjEiLCJzdWIiOiJjbWlyYXJjMjEwMDAxdG9obWJ6M3BlZ2I4Iiwicm9sZSI6IldBSVRFUiIsImlhdCI6MTc2NDg0NDM3NiwiZXhwIjoxNzY0OTMwNzc2fQ.MmuI_M5ecdyCkke-uN0lyMl7IE4ALWZ7JBnn5hrGBa8
+
+###
+
+POST http://localhost:3000/tables/createTable
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoiY21pcjhkOHkxMDAwMG80aG1yOHoxM2l5ayIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2NDg1MDYyMywiZXhwIjoxNzY0OTM3MDIzfQ.CUDMgbRmFJ9SndjlxwX9q4OGtAZVhOhagIfzYM5Bdt0
+
+{
+  "table_number": "15",
+  "capacity": 4
+}
+
+
+###
+
+PUT http://localhost:3000/tables/updateStatus/cmireiq3h000070hm3yv94qdz
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoiY21pcjhkOHkxMDAwMG80aG1yOHoxM2l5ayIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2NDg1MDYyMywiZXhwIjoxNzY0OTM3MDIzfQ.CUDMgbRmFJ9SndjlxwX9q4OGtAZVhOhagIfzYM5Bdt0
+
+{
+  "status": "CLOSED"
+}
