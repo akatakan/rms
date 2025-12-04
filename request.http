@@ -37,10 +37,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkb
 
 ###
 
-PUT http://localhost:3000/tables/updateStatus/cmireiq3h000070hm3yv94qdz
+PATCH http://localhost:3000/tables/updateStatus/cmireiq3h000070hm3yv94qdz
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoiY21pcjhkOHkxMDAwMG80aG1yOHoxM2l5ayIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2NDg1MDYyMywiZXhwIjoxNzY0OTM3MDIzfQ.CUDMgbRmFJ9SndjlxwX9q4OGtAZVhOhagIfzYM5Bdt0
 
 {
-  "status": "CLOSED"
+  "status": "RESERVED"
 }

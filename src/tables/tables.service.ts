@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { TableStatus } from 'src/generated/prisma/enums';
-import { TablesCreateInput, TablesWhereUniqueInput } from 'src/generated/prisma/models';
+import { TablesCreateInput, TablesUpdateInput, TablesWhereUniqueInput } from 'src/generated/prisma/models';
 
 @Injectable()
 export class TablesService {
@@ -19,7 +19,7 @@ export class TablesService {
         return this.databaseService.tables.create({ data });
     }
 
-    async updateTable(where: TablesWhereUniqueInput, data: TablesCreateInput){
+    async updateTable(where: TablesWhereUniqueInput, data: TablesUpdateInput){
         return this.databaseService.tables.update({ where, data });
     }
 
