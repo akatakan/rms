@@ -1,4 +1,7 @@
 -- CreateEnum
+CREATE TYPE "TransactionType" AS ENUM ('DEBT', 'PAYMENT');
+
+-- CreateEnum
 CREATE TYPE "OrderItemStatus" AS ENUM ('PENDING', 'PREPARING', 'READY', 'SERVED', 'CANCELLED');
 
 -- CreateEnum
@@ -14,7 +17,7 @@ CREATE TYPE "PaymentStatus" AS ENUM ('PENDING', 'COMPLETED', 'REFUNDED');
 CREATE TYPE "StockChangeType" AS ENUM ('SALE', 'RESTOCK', 'WASTE', 'CORRECTION');
 
 -- CreateEnum
-CREATE TYPE "TableStatus" AS ENUM ('AVAILABLE', 'OCCUPIED', 'RESERVED', 'CLOSED');
+CREATE TYPE "TableStatus" AS ENUM ('AVAILABLE', 'READY_TO_ORDER', 'OCCUPIED', 'RESERVED', 'CLOSED');
 
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('ADMIN', 'WAITER', 'KITCHEN', 'CASHIER');
@@ -29,6 +32,39 @@ CREATE TABLE "Categories" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Categories_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "CustomerTransactions" (
+    "id" TEXT NOT NULL,
+    "amount" DOUBLE PRECISION NOT NULL,
+    "type" "TransactionType" NOT NULL,
+    "description" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "customerId" TEXT NOT NULL,
+    "orderId" TEXT,
+
+    CONSTRAINT "CustomerTransactions_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Customer" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "phone" TEXT,
+    "balance" DOUBLE PRECISION NOT NULL DEFAULT 0.00,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Customer_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "TableLocations" (
+    "id" TEXT NOT NULL,
+    "location" TEXT NOT NULL,
+
+    CONSTRAINT "TableLocations_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -72,6 +108,7 @@ CREATE TABLE "Orders" (
     "cancelled_by_id" TEXT,
     "waiter_id" TEXT NOT NULL,
     "table_id" TEXT NOT NULL,
+    "customerId" TEXT,
 
     CONSTRAINT "Orders_pkey" PRIMARY KEY ("id")
 );
@@ -84,8 +121,10 @@ CREATE TABLE "Payments" (
     "payment_method" "PaymentMethod" NOT NULL,
     "payment_status" "PaymentStatus" NOT NULL DEFAULT 'PENDING',
     "transaction_date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "is_deleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "deletedAt" TIMESTAMP(3),
     "cashier_id" TEXT NOT NULL,
 
     CONSTRAINT "Payments_pkey" PRIMARY KEY ("id")
@@ -130,6 +169,7 @@ CREATE TABLE "Tables" (
     "status" "TableStatus" NOT NULL DEFAULT 'AVAILABLE',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "location_id" TEXT NOT NULL,
 
     CONSTRAINT "Tables_pkey" PRIMARY KEY ("id")
 );
@@ -154,6 +194,12 @@ CREATE TABLE "Users" (
 CREATE UNIQUE INDEX "Categories_name_key" ON "Categories"("name");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Customer_phone_key" ON "Customer"("phone");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "TableLocations_location_key" ON "TableLocations"("location");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Products_name_key" ON "Products"("name");
 
 -- CreateIndex
@@ -161,6 +207,12 @@ CREATE UNIQUE INDEX "Tables_table_number_key" ON "Tables"("table_number");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Users_username_key" ON "Users"("username");
+
+-- AddForeignKey
+ALTER TABLE "CustomerTransactions" ADD CONSTRAINT "CustomerTransactions_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CustomerTransactions" ADD CONSTRAINT "CustomerTransactions_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Orders"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OrderOnProduct" ADD CONSTRAINT "OrderOnProduct_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -184,6 +236,9 @@ ALTER TABLE "Orders" ADD CONSTRAINT "Orders_waiter_id_fkey" FOREIGN KEY ("waiter
 ALTER TABLE "Orders" ADD CONSTRAINT "Orders_table_id_fkey" FOREIGN KEY ("table_id") REFERENCES "Tables"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Orders" ADD CONSTRAINT "Orders_customerId_fkey" FOREIGN KEY ("customerId") REFERENCES "Customer"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Payments" ADD CONSTRAINT "Payments_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "Orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -197,3 +252,6 @@ ALTER TABLE "StockHistory" ADD CONSTRAINT "StockHistory_product_id_fkey" FOREIGN
 
 -- AddForeignKey
 ALTER TABLE "StockHistory" ADD CONSTRAINT "StockHistory_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Tables" ADD CONSTRAINT "Tables_location_id_fkey" FOREIGN KEY ("location_id") REFERENCES "TableLocations"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

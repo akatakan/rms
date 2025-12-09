@@ -69,15 +69,24 @@ async function main() {
     ]);
     console.log(`✓ Created ${users.length} users:`, users.map(u => `${u.username} (${u.role})`).join(', '));
 
+    const tableLocations = await prisma.tableLocations.createMany({
+        data: [
+            {location:'Salon'},
+            {location:'Bahçe'},
+            {location:'Teras'}
+        ],
+        skipDuplicates: true,
+    });
+    console.log(`✓ Created ${tableLocations.count} location`);
     // Create sample tables
     const tables = await prisma.tables.createMany({
         data: [
-            { table_number: '1', capacity: 2, status: 'AVAILABLE' },
-            { table_number: '2', capacity: 2, status: 'AVAILABLE' },
-            { table_number: '3', capacity: 4, status: 'AVAILABLE' },
-            { table_number: '4', capacity: 4, status: 'OCCUPIED' },
-            { table_number: '5', capacity: 6, status: 'AVAILABLE' },
-            { table_number: '6', capacity: 8, status: 'AVAILABLE' },
+            { table_number: '1', capacity: 2, status: 'AVAILABLE',location_id:'cmiz5gpak00059whma26iuh0p'},
+            { table_number: '2', capacity: 2, status: 'READY_TO_ORDER',location_id:'cmiz5gpak00059whma26iuh0p' },
+            { table_number: '3', capacity: 4, status: 'RESERVED',location_id:'cmiz5gpak00059whma26iuh0p'},
+            { table_number: '4', capacity: 4, status: 'OCCUPIED',location_id:'cmiz5gpak00059whma26iuh0p'},
+            { table_number: '5', capacity: 6, status: 'CLOSED',location_id:'cmiz5gpak00069whmq0oj7jqh' },
+            { table_number: '6', capacity: 8, status: 'AVAILABLE',location_id:'cmiz5gpak00079whmc36ru69y'},
         ],
         skipDuplicates: true,
     });

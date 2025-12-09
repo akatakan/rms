@@ -3,21 +3,18 @@ model Tables {
   table_number String      @unique
   capacity     Int
   status       TableStatus @default(AVAILABLE)
-  location     TableLocation @default(INDOOR)
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   orders       Orders[]
+
+  location     TableLocations @relation(fields: [location_id],references: [id])
+  location_id String
 }
 
 enum TableStatus {
   AVAILABLE
+  READY_TO_ORDER
   OCCUPIED
   RESERVED
   CLOSED
-}
-
-enum TableLocation {
-  INDOOR
-  GARDEN
-  TERRACE
 }

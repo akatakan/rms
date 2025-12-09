@@ -1,0 +1,6 @@
+model TableLocations {
+    id String @default(cuid()) @id
+    location String @unique
+
+    table Tables[]
+}
