@@ -1,14 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { TableStatus } from 'src/generated/prisma/enums';
-import { TablesCreateInput, TablesUpdateInput, TablesWhereUniqueInput } from 'src/generated/prisma/models';
+import { TablesCreateInput, TablesOrderByWithRelationInput, TablesUpdateInput, TablesWhereInput, TablesWhereUniqueInput } from 'src/generated/prisma/models';
 
 @Injectable()
 export class TablesService {
     constructor(private databaseService: DatabaseService) {}
 
-    async getAllTables() {
-        return this.databaseService.tables.findMany();
+    async getAllTables(params:{
+            skip?: number;
+            take?: number;
+            cursor?: TablesWhereUniqueInput;
+            where?: TablesWhereInput;
+            orderBy?: TablesOrderByWithRelationInput;
+        }) {
+        const { skip, take, cursor, where, orderBy } = params;
+        return this.databaseService.tables.findMany({
+            skip,
+            take,
+            cursor,
+            where,
+            orderBy,
+        });
     }
 
     async getTableById(id: string) {

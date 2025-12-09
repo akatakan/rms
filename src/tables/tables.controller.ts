@@ -15,7 +15,9 @@ export class TablesController {
     @Roles(Role.WAITER)
     @Get()
     async getTables() : Promise<Tables[]> {
-        return this.tableService.getAllTables(); 
+        return this.tableService.getAllTables({
+            orderBy: {id:'asc'}
+        }); 
     }
 
     @Roles(Role.ADMIN)
