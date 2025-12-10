@@ -69,24 +69,54 @@ async function main() {
     ]);
     console.log(`✓ Created ${users.length} users:`, users.map(u => `${u.username} (${u.role})`).join(', '));
 
-    const tableLocations = await prisma.tableLocations.createMany({
-        data: [
+    const locationData = [
             {location:'Salon'},
             {location:'Bahçe'},
             {location:'Teras'}
-        ],
+        ]
+
+    const tableLocations = await prisma.tableLocations.createMany({
+        data: locationData,
         skipDuplicates: true,
     });
     console.log(`✓ Created ${tableLocations.count} location`);
+
+    const createdLocations = await prisma.tableLocations.findMany({
+        where: {
+            location: {
+                in: locationData.map(l => l.location)
+            }
+        },
+        select: {
+            id: true,
+            location: true,
+        }
+    });
+
+    const locationIdMap: { [key: string]: string } = createdLocations.reduce((map, loc) => {
+        map[loc.location] = loc.id;
+        return map;
+    }, {} as { [key: string]: string });
+
+    // Verify IDs were found
+    const salonId = locationIdMap['Salon'];
+    const bahceId = locationIdMap['Bahçe'];
+    const terasId = locationIdMap['Teras'];
+
+    if (!salonId || !bahceId || !terasId) {
+        console.error("Error: Could not find all necessary Table Location IDs.");
+        return; // Stop if IDs are missing
+    }
+
     // Create sample tables
     const tables = await prisma.tables.createMany({
         data: [
-            { table_number: '1', capacity: 2, status: 'AVAILABLE',location_id:'cmiz5gpak00059whma26iuh0p'},
-            { table_number: '2', capacity: 2, status: 'READY_TO_ORDER',location_id:'cmiz5gpak00059whma26iuh0p' },
-            { table_number: '3', capacity: 4, status: 'RESERVED',location_id:'cmiz5gpak00059whma26iuh0p'},
-            { table_number: '4', capacity: 4, status: 'OCCUPIED',location_id:'cmiz5gpak00059whma26iuh0p'},
-            { table_number: '5', capacity: 6, status: 'CLOSED',location_id:'cmiz5gpak00069whmq0oj7jqh' },
-            { table_number: '6', capacity: 8, status: 'AVAILABLE',location_id:'cmiz5gpak00079whmc36ru69y'},
+            { table_number: '1', capacity: 2, status: 'AVAILABLE',location_id:salonId},
+            { table_number: '2', capacity: 2, status: 'READY_TO_ORDER',location_id:salonId },
+            { table_number: '3', capacity: 4, status: 'RESERVED',location_id:salonId},
+            { table_number: '4', capacity: 4, status: 'OCCUPIED',location_id:salonId},
+            { table_number: '5', capacity: 6, status: 'CLOSED',location_id:bahceId },
+            { table_number: '6', capacity: 8, status: 'AVAILABLE',location_id:terasId},
         ],
         skipDuplicates: true,
     });

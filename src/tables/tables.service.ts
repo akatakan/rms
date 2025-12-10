@@ -21,6 +21,13 @@ export class TablesService {
             cursor,
             where,
             orderBy,
+            include:{
+                location:{
+                    select:{
+                        location:true
+                    }
+                }
+            }
         });
     }
 
