@@ -3,7 +3,7 @@ model Orders {
   status          OrderStatus @default(PENDING)
   total_amount    Float
   tax_amount      Float
-  discount_amount Float
+  discount_amount Float?
   cancel_reason   String?
   note            String?
 
